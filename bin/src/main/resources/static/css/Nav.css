@@ -1,0 +1,7 @@
+@charset "ISO-8859-1";
+*{
+	margin: 0;
+}
+.navbar-brand{
+	color: red;
+}
