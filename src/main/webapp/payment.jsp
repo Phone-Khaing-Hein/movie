@@ -7,11 +7,67 @@
 <title>Teepo Payment</title>
 <link rel = "icon" href = "/Logo/Teepo1.png" type = "image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<c:url value="/css/payment.css" var="css"/>
-<link rel="stylesheet" href="${ css }">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/937998980133056517/992323476566315008/Teepo1.png">
+<style>
+	@charset "ISO-8859-1";
+body{ 
+background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/25badb14-858b-4b1c-8b7d-2244098454d9/538e2c55-738c-4e62-8152-490342e18a86/SG-en-20220606-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+height: 60vh;
+background-size:cover; 
+background-position:center; 
+font-family:sans-serif;
+} 
+.form-box{ 
+width:500px; 
+background: rgba(0,0,0,0.5); 
+margin: 12% auto; 
+padding: 50px 0; 
+color: #fff; 
+box-shadow: 0 0 20px 2 px rgba(0,0,0,0.5); 
+} 
+h1{ 
+text-align:center; 
+margin-bottom: 40px; 
+} 
+.input-box{ 
+margin:31px auto; 
+width: 80%; 
+border-bottom: 1px solid #fff; 
+padding-top: 10px; 
+padding-bottom: 5px; 
+} 
+.input-box input{ 
+width: 90%; 
+border: none; 
+outline: none; 
+background: transparent; 
+color: #fff;
+font-size: 1rem;
+} 
+::placeholder {
+  color: white;
+}
+.eye{ 
+position: absolute; 
+} 
+#e1{ 
+display: none; 
+} 
+.login1{ 
+margin: 40px auto 20px; 
+width: 60%; 
+display: block; 
+outline: none; 
+padding: 10px; 
+border: 1px solid transparent; 
+cursor: pointer; 
+background: #0099ff; 
+color: #fff; 
+font-size: 16px; 
+}
+</style>
 </head>
 <body class="bg-dark d-flex justify-content-center align-items-center" style="max-height: 100vh; min-height: 100vh;">
 <c:url value="/payment/add" var="payment"/>

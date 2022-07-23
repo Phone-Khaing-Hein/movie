@@ -38,11 +38,6 @@ public class MovieController {
 	@Autowired
 	private PaymentDao dao4;
 	
-	@GetMapping("/**")
-	public String notfound() {
-		return "404";
-	}
-	
 	@GetMapping({"/home","/"})
 	public String home(Model m) {
 		m.addAttribute("nav", "home");

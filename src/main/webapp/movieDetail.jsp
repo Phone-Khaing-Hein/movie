@@ -58,11 +58,13 @@
 						</button>
 					</div>
 
-					<div class="submit mr-2">
-						<button type="button" class="btn btn-outline-danger">
-							<i class="fa-solid fa-heart mr-2"></i>Add to Favorite
-						</button>
-					</div>
+					<c:if test="${ not empty loginUser }">
+						<div class="submit mr-2">
+							<button type="button" class="btn btn-outline-danger">
+								<i class="fa-solid fa-heart mr-2"></i>Add to Favorite
+							</button>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -102,10 +104,12 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<h5>For Free User</h5>
+					<h5>720P</h5>
 					<a href="${ m.normalDl }" target="_blank">Download ${ m.name }</a><br>
-					<h5 class="mt-3">For Premium User</h5>
-					<a href="${ m.premiumDl }" target="_blank">Download ${ m.name }</a>
+					<c:if test="${ loginUser.role eq 'Premium' }">
+						<h5 class="mt-3">1080P</h5>
+						<a href="${ m.premiumDl }" target="_blank">Download ${ m.name }</a>
+					</c:if>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
