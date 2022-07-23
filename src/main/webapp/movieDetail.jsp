@@ -30,9 +30,17 @@
 			<h1 style="color: white;">${ m.name }</h1>
 			<div>
 
-				<p style="color: white;">${ m.description  }</p>
-				<p style="color: white;">Released: ${ m.releaseDate }
-				<p style="color: white;">Genre: Sci-Fi, Thriller</p>
+				<p class="text-white-50">${ m.description  }</p>
+				<p class="mb-2 text-white-50">Released: ${ m.releaseDate } </p>
+				<p>
+					<span class="text-white-50">Genre: </span>
+					<c:forEach items="${genres}" var="g">
+						<span class="text-white-50">${ g.name }${ g.name eq genres.get(genres.size()-1).name ? '' : ',' }</span>
+					</c:forEach>
+				</p>
+				<c:if test="${ m.episodes != 1 }">
+					<p class="text-white-50">Episodes: ${ m.episodes }</p>
+				</c:if>
 
 				<div class="d-flex mt-2 gap-2">
 

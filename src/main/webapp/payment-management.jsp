@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Management</title>
+    <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -19,88 +19,69 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-</head>
-<body>
-	<c:import url="adminHeader.jsp"></c:import>
-	<div class="d-flex mt-2 mb-2">
-     <c:import url="adminSidebar.jsp"></c:import>
-      <div class="w-75 rounded me-2 bg-dark p-4">
-        <div class="d-flex justify-content-between align-items-center">
-          <h3 class="text-white mb-0">Payments List</h3>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+       <style>
+    	label, .dataTables_info, input, #movieTable_previous, #movieTable_next{
+    		color: white !important;
+    	}
+    </style>
+  </head>
+  <body class="bg-secondary">
+   <c:import url="adminHeader.jsp"></c:import>
+
+    <div class="d-flex mt-2 mb-2" style="margin-top: 80px !important;">
+      <c:import url="adminSidebar.jsp"></c:import>
+
+      <div class="w-75 rounded me-2 bg-dark p-4"  style="margin-left: 390px !important;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="text-white mb-0">Genres List</h3>
+          <c:url value="/admin/genre/edit" var="addGenre"></c:url>
+          <a href="${ addGenre }" class="btn btn-success">Add New Genre</a>
         </div>
         <table id="movieTable" class="table table-striped text-white">
           <thead>
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Months</th>
+              <th>User</th>
+              <th>ScreenShot</th>
               <th>Control</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="text-white">1</td>
-              <td class="text-white">Rimuru Tempest</td>
-              <td class="text-white">3</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="movie-add.html" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-white">2</td>
-              <td class="text-white">Rimuru Tempest 2</td>
-              <td class="text-white">1</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-white">3</td>
-              <td class="text-white">Rimuru Tempest 3</td>
-              <td class="text-white">6</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-white">1</td>
-              <td class="text-white">Rimuru Tempest</td>
-              <td class="text-white">1</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-white">1</td>
-              <td class="text-white">Rimuru Tempest</td>
-              <td class="text-white">1</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-white">1</td>
-              <td class="text-white">Rimuru Tempest</td>
-              <td class="text-white">3</td>
-              <td>
-                <a href="" class="btn btn-secondary btn-sm">Detail</a>
-                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Delete</a>
-              </td>
-            </tr>
+            <c:forEach items="${ paymentList }" var="p">
+            	<tr>
+	              <td class="text-white">${ p.id }</td>
+	              <td class="text-white">${ p.name }</td>
+	              <td></td>
+	              <td></td>
+	              <td>
+	              	<c:url value="/admin/payment/edit" var="paymentEdit">
+	              		<c:param name="paymentId" value="${ p.id }"></c:param>
+	              	</c:url>
+	                <a href="${ paymentEdit }" class="btn btn-warning btn-sm">Edit</a>
+	                <c:url value="/admin/payment/delete" var="paymentDelete">
+	              		<c:param name="paymentId" value="${ p.id }"></c:param>
+	              	</c:url>
+	                <a href="${ paymentDelete }" class="btn btn-danger btn-sm">Delete</a>
+	              </td>
+	            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
     </div>
-</body>
+	<script>
+	$(document).ready( function () {
+	    $('#movieTable').DataTable();
+	} );
+	</script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

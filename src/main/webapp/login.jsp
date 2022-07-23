@@ -32,7 +32,7 @@
 				<button type="submit" class="login1">Login</button>
 			</div>
 		</form>
-		<div class="signup-link ml-5">
+		<div class="signup-link ms-5">
 			<c:url value="sign-up" var="signUp" />
 			<c:url value="home" var="home" />
 			Don't have an account? <a href="${ signUp }">Sign Up Here</a> || <a href="${ home }">Home</a>

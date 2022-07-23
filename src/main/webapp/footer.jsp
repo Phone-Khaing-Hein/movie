@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <footer class="bg-dark text-center text-white mt-5" style="width: 100%">
       <div class="container p-4">
         <section class="mb-4">
@@ -36,16 +36,21 @@ pageEncoding="ISO-8859-1"%>
           </p>
         </section>
         <div class="input-group ms-5">
-         <form action="">
+        <c:url value="/suggestion/add" var="add"></c:url>
+         <form action="${ add }" method="post">
          	<div class="d-flex justify-content-center align-items-center ms-5">
-         		 <textarea name="suggestion" cols="30" rows="1" class="form-control me-2 ms-5" style="width: 900px;max-height: 100px"></textarea>
+         		<c:if test="${ not empty loginUser || not empty adminUser }">
+         			<input type="hidden" name="userId" value="${ not empty loginUser ? loginUser.id : not empty adminUser ? adminUser.id : '' }" />
+         		</c:if>
+         		<textarea cols="30" name="feedback" rows="1" class="form-control me-2 ms-5" style="width: 900px;max-height: 100px"></textarea>
 		          <button
 		            class="btn btn-danger"
-		            type="button"
+		            type="submit"
 		            id="button-addon1"
 		          >
 		            <i class="fa-solid fa-paper-plane"></i>
 		          </button>
+         	
          	</div>
          </form>
         </div>

@@ -20,16 +20,16 @@
       referrerpolicy="no-referrer"
     />
   </head>
-  <body>
+  <body class="bg-secondary">
    <c:import url="adminHeader.jsp"></c:import>
-    <div class="d-flex mt-2 mb-2">
+    <div class="d-flex mt-2 mb-2" style="margin-top: 80px !important;">
      
      <c:import url="adminSidebar.jsp"></c:import>
 
-      <div class="w-75 rounded me-2 bg-dark p-2 text-white">
+      <div class="w-75 rounded me-2 bg-dark p-2 text-white" style="margin-left: 390px !important;">
         <div
           class="p-2 d-flex justify-content-between flex-md-wrap h-100"
-          style="height: 85vh"
+          style="height: 83vh !important"
         >
           <div
             class="bg-secondary rounded p-1"
@@ -37,7 +37,7 @@
           >
             <div class="d-flex flex-column align-items-end p-2">
               <h4 class="mb-0 mt-2">Movies</h4>
-              <p>100</p>
+              <p>${ movies }</p>
             </div>
           </div>
           <div
@@ -46,7 +46,7 @@
           >
             <div class="d-flex flex-column align-items-end p-2">
               <h4 class="mb-0 mt-2">Series</h4>
-              <p>100</p>
+              <p>${ series }</p>
             </div>
           </div>
           <div
@@ -55,7 +55,7 @@
           >
             <div class="d-flex flex-column align-items-end p-2">
               <h4 class="mb-0 mt-2">Users</h4>
-              <p>100</p>
+              <p>${ users }</p>
             </div>
           </div>
           <div
@@ -64,7 +64,7 @@
           >
             <div class="d-flex flex-column align-items-end p-2">
               <h4 class="mb-0 mt-2">Payment</h4>
-              <p>100</p>
+              <p>${ payments }</p>
             </div>
           </div>
           <div>
@@ -80,17 +80,16 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      const labels = ["January", "February", "March", "April", "May", "June"];
+      const labels = ["January", "February", "March", "April", "May", "June","July","August","Setember","October","November","December"];
 
       const data = {
         labels: labels,
         datasets: [
           {
-            label: "My First dataset",
+            label: "Users",
             backgroundColor: "rgb(255, 99, 132)",
             borderColor: "rgb(255, 99, 132)",
-            data: [0, 10, 5, 2, 20, 30, 45],
-            data: [0, 10, 15, 20, 10, 25, 44],
+            data: [0, 10, 5, 2, 20, 30, 45, 33, 21, 9, 4, 55],
           },
         ],
       };

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <c:url value="/css/style.css" var="css"></c:url>
 <link rel="stylesheet" href="${ css }" type="text/css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/937998980133056517/992323476566315008/Teepo1.png">
 
 <title>Teepo Home</title>
@@ -16,9 +16,9 @@
 <body style="height: 100vh; background-color: black;">
 <c:import url="nav.jsp"></c:import>
 <div class="container">
-<h4 style="color:white;margin-top: 20px;">Trand</h4><hr class="bg-white"/>
+<h4 style="color:white;margin-top: 20px;">Trend</h4><hr class="bg-white"/>
 <div class="d-flex mt-2 mb-5 gap-3 align-items-center justify-content-center">
-    	<c:forEach items="${movies}" var="m">
+    	<c:forEach items="${trends}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">
 	    		<c:param name="movieId" value="${ m.id }"></c:param>
 	    	</c:url>
@@ -39,7 +39,7 @@
 </div>
 
 <h4 style="color:white">Latest Movies</h4><hr class="bg-white"/>
-<div class="d-flex mt-2 mb-5s gap-3 align-items-center justify-content-center">
+<div class="d-flex mt-2 mb-5 gap-3 align-items-center justify-content-center">
     	<c:forEach items="${movies}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">
 	    		<c:param name="movieId" value="${ m.id }"></c:param>
@@ -62,7 +62,7 @@
 
 <h4 style="color:white">Latest Series</h4><hr class="bg-white"/>
 <div class="d-flex mt-2 gap-3 align-items-center justify-content-center">
-    	<c:forEach items="${movies}" var="m">
+    	<c:forEach items="${series}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">
 	    		<c:param name="movieId" value="${ m.id }"></c:param>
 	    	</c:url>

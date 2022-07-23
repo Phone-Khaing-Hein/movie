@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.movie.dao.GenreDao;
 import com.movie.dao.MovieDao;
+import com.movie.dao.PaymentDao;
+import com.movie.dao.UserDao;
 import com.movie.model.Movie;
 
 @Controller
@@ -26,14 +29,62 @@ public class MovieController {
 	@Autowired
 	private MovieDao dao;
 	
-	@GetMapping("/home")
+	@Autowired
+	private GenreDao dao2;
+	
+	@Autowired
+	private UserDao dao3;
+	
+	@Autowired
+	private PaymentDao dao4;
+	
+	@GetMapping({"/home","/"})
 	public String home(Model m) {
-		m.addAttribute("movies", dao.findAll());
+		m.addAttribute("nav", "home");
+		m.addAttribute("genres", dao2.findAll());
+		m.addAttribute("movies", dao.findMovies6());
+		m.addAttribute("series", dao.findSeries6());
+		m.addAttribute("trends", dao.findAll6());
 		return "home";
+	}
+	
+	@GetMapping("/movies")
+	public String movies(Model m) {
+		m.addAttribute("nav", "Movies");
+		m.addAttribute("movies", dao.findAllMovies());
+		return "template";
+	}
+	
+	@GetMapping("/series")
+	public String series(Model m) {
+		m.addAttribute("nav", "Series");
+		m.addAttribute("movies", dao.findAllSeries());
+		return "template";
+	}
+	
+	@GetMapping("/trends")
+	public String trends(Model m) {
+		m.addAttribute("nav", "Trends");
+		m.addAttribute("movies", dao.findAll());
+		return "template";
+	}
+	
+	@GetMapping("/premium")
+	public String premium() {
+		return "premiumAds";
+	}
+	
+	@GetMapping("/payment")
+	public String payment() {
+		return "payment";
 	}
 	
 	@GetMapping("/admin/dashboard")
 	public String dashboard(Model m) {
+		m.addAttribute("payments", dao4.paymentCount());
+		m.addAttribute("movies", dao.movieCount());
+		m.addAttribute("series", dao.seriesCount());
+		m.addAttribute("users", dao3.userCount());
 		return "adminHome";
 	}
 	
@@ -45,26 +96,49 @@ public class MovieController {
 	}
 	
 	@GetMapping("/admin/movie/add")
-	public String add(Model m) {
+	public String add(@RequestParam(required = false) String movieId, Model m) {
+		if(!isEmpty(movieId)) {
+			m.addAttribute("movie", dao.findById(movieId));
+			m.addAttribute("genres", dao.genres(Integer.parseInt(movieId)));
+		}
+		m.addAttribute("allGenres", dao2.findAll());
 		return "movie-add";
+	}
+	
+	@GetMapping("/admin/movie/delete")
+	public String add(@RequestParam String movieId) {
+		dao.delete(Integer.parseInt(movieId));
+		deleteFile(dao.findById(movieId).getPoster());
+		return "redirect:/admin/movie/list";
 	}
 	
 	@GetMapping("/movie/detail")
 	public String detail(Model m, @RequestParam("movieId") String id) {
+		m.addAttribute("genres", dao.genres(Integer.parseInt(id)));
 		m.addAttribute("m", dao.findById(id));
 		return "movieDetail";
 	}
 	
+	@GetMapping("/admin/movie/detail")
+	public String adminDetail(Model m, @RequestParam("movieId") String id) {
+		m.addAttribute("genres", dao.genres(Integer.parseInt(id)));
+		m.addAttribute("m", dao.findById(id));
+		return "movie-detail";
+	}
+	
 	@PostMapping("/admin/movie/add")
-	public String addMovie(@ModelAttribute Movie movie, Model m, RedirectAttributes redirect) throws IllegalStateException, IOException {
+	public String addMovie(@ModelAttribute Movie movie, Model m, RedirectAttributes redirect, @RequestParam(required = false) String[] genres) throws IllegalStateException, IOException {
+		
 		if(isEmpty(movie.getName())) {
 			m.addAttribute("error1", "Movie name is required!");
 		}
-			
-		if(isEmpty(movie.getPosterFile().getOriginalFilename())) {
-			m.addAttribute("error2", "Movie poster is required!");
+		
+		if(movie.getId() == null) {
+			if(isEmpty(movie.getPosterFile().getOriginalFilename())) {
+				m.addAttribute("error2", "Movie poster is required!");
+			}
 		}
-			
+		
 		if(isEmpty(movie.getReleaseDate())) {
 			m.addAttribute("error3", "Movie release date is required!");
 		}
@@ -85,18 +159,29 @@ public class MovieController {
 			m.addAttribute("error7", "Movie description is required!");
 		}
 		
-		if(movie.getEpisodes() == 0) {
+		if(genres == null) {
+			m.addAttribute("error8", "Movie genre is required!(At least one!)");
+		}
+		
+		if(movie.getEpisodes() == null) {
 			movie.setEpisodes(1);
 		}
 		
-		if(!isEmpty(movie.getName()) && !isEmpty(movie.getPosterFile().getOriginalFilename()) && !isEmpty(movie.getReleaseDate()) && 
+		if(!isEmpty(movie.getName()) && (!isEmpty(movie.getPosterFile().getOriginalFilename()) || movie.getId() != null) && !isEmpty(movie.getReleaseDate()) && 
 		   !isEmpty(movie.getTrailer()) && !isEmpty(movie.getNormalDl()) && !isEmpty(movie.getPremiumDl()) && !isEmpty(movie.getDescription())){
 			
-			var random = new Random();
-			movie.setPoster(movie.getPosterFile().getName().concat(String.valueOf(random.nextInt())).concat(".jpg"));
-			uploadFile(movie.getPosterFile(), movie.getPoster());
-			dao.save(movie);
-			redirect.addFlashAttribute("message", "%s has been created successfully!".formatted(movie.getName()));
+			if(movie.getPosterFile() != null && isEmpty(movie.getPoster())) {
+				var random = new Random();
+				movie.setPoster(movie.getPosterFile().getName().concat(String.valueOf(random.nextInt())).concat(".jpg"));
+				uploadFile(movie.getPosterFile(), movie.getPoster());
+			}
+			if(movie.getId() == null) {
+				dao.save(movie, genres);
+				redirect.addFlashAttribute("message", "%s has been created successfully!".formatted(movie.getName()));
+			}else {
+				dao.update(movie, genres);
+				redirect.addFlashAttribute("message", "%s has been updated successfully!".formatted(movie.getName()));
+			}
 			return "redirect:/admin/movie/add";
 		   }
 		

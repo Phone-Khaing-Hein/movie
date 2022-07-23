@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Movie {
 	
-	private int id;
+	private Integer id;
 	private String name;
 	private String description;
 	private String releaseDate;
 	private String trailer;
 	private MultipartFile posterFile;
 	private String poster;
-	private int episodes;
+	private Integer episodes;
 	private String normalDl;
 	private String premiumDl;
 }

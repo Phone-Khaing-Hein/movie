@@ -19,20 +19,28 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <style>
+    	label, .dataTables_info, input, #movieTable_previous, #movieTable_next{
+    		color: white !important;
+    	}
+    </style>
   </head>
-  <body>
+  <body class="bg-secondary">
    <c:import url="adminHeader.jsp"></c:import>
 
-    <div class="d-flex mt-2 mb-2">
+    <div class="d-flex mt-2 mb-2" style="margin-top: 80px !important;">
       <c:import url="adminSidebar.jsp"></c:import>
 
-      <div class="w-75 rounded me-2 bg-dark p-4">
-        <div class="d-flex justify-content-between align-items-center">
+      <div class="w-75 rounded me-2 bg-dark p-4" style="margin-left: 390px !important;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="text-white mb-0">Movies List</h3>
           <c:url value="/admin/movie/add" var="addMovie"></c:url>
           <a href="${ addMovie }" class="btn btn-success">Add New Movie</a>
         </div>
-        <table id="movieTable" class="table table-striped text-white">
+        <table id="movieTable" class="table table-striped text-white table-hover">
           <thead>
             <tr>
               <th>#</th>
@@ -48,9 +56,18 @@
 	              <td class="text-white">${ m.name }</td>
 	              <td class="text-white">${ m.releaseDate }</td>
 	              <td>
-	                <a href="movie-add.html" class="btn btn-warning btn-sm">Edit</a>
-	                <a href="" class="btn btn-danger btn-sm">Delete</a>
-	                <a href="" class="btn brn-secondary btn-sm">Detail</a>
+	              	<c:url value="/admin/movie/add" var="movieEdit">
+	                	<c:param name="movieId" value="${ m.id }"></c:param>
+	                </c:url>
+	                <a href="${ movieEdit }" class="btn btn-warning btn-sm">Edit</a>
+	                <c:url value="/admin/movie/delete" var="movieDelete">
+	                	<c:param name="movieId" value="${ m.id }"></c:param>
+	                </c:url>
+	                <a href="${ movieDelete }" class="btn btn-danger btn-sm">Delete</a>
+	                <c:url value="/admin/movie/detail" var="movieDetail">
+	                	<c:param name="movieId" value="${ m.id }"></c:param>
+	                </c:url>
+	                <a href="${ movieDetail }" class="btn btn-secondary btn-sm">Detail</a>
 	              </td>
 	            </tr>
             </c:forEach>
@@ -58,7 +75,11 @@
         </table>
       </div>
     </div>
-
+	<script>
+	$(document).ready( function () {
+	    $('#movieTable').DataTable();
+	} );
+	</script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

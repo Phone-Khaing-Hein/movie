@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,7 +93,7 @@ public class SecurityController {
 			var user = dao.findByEmail(email);
 			if("Admin".equals(user.getRole().name())) {
 				if(password.equals(user.getPassword())) {
-					session.setAttribute("loginUser", user);
+					session.setAttribute("adminUser", user);
 					return "redirect:/admin/dashboard";
 				}else {
 					m.addAttribute("email", email);
@@ -107,6 +108,33 @@ public class SecurityController {
 		}
 		
 		return "adminLogin";
+	}
+	
+	@PostMapping("/sign-up")
+	public String signUp(@ModelAttribute User user, Model m, HttpSession session) {
+		m.addAttribute("user", user);
+		if(isEmpty(user.getName())) {
+			m.addAttribute("error1", "Name is required!");
+		}
+		if(isEmpty(user.getEmail())) {
+			m.addAttribute("error2", "Email is required!");
+		}
+		if(isEmpty(user.getPassword())) {
+			m.addAttribute("error3", "Password is required!");
+		}
+		if(isEmpty(user.getCpassword())) {
+			m.addAttribute("error4", "Confirm Password is required!");
+		}
+		if(!user.getPassword().equals(user.getCpassword())) {
+			m.addAttribute("error5", "Password and Confirm Password are not match!");
+		}
+		
+		if(!isEmpty(user.getName()) && !isEmpty(user.getEmail()) && !isEmpty(user.getCpassword()) && user.getPassword().equals(user.getCpassword())) {
+			dao.registerUser(user);
+			session.setAttribute("loginUser", user);
+			return "redirect:/home";
+		}
+		return "signUp";
 	}
 	
 	private boolean isEmpty(String str) {
