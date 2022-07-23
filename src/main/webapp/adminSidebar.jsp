@@ -41,7 +41,7 @@
             class="w-75 btn btn-outline-light mt-3"
             >Payment Management</a
           >
-          <c:url value="/logout" var="logout"/>
+          <c:url value="/admin/logout" var="logout"/>
           <a
             href="${ logout }"
             class="w-75 btn btn-danger mt-3"

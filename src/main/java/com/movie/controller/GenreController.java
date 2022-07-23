@@ -36,7 +36,18 @@ public class GenreController {
 
     @PostMapping("/admin/genre/edit")
     public String addGenre(Model m,@ModelAttribute Genre genre, RedirectAttributes req){
+    	if(genre == null || isEmpty(genre.getName())) {
+    		m.addAttribute("error", "Genre name is required!");
+    		return "genre-edit";
+    	}
     	if(genre.getId() == null) {
+    		var genres = dao.findAll();
+    		for(var g : genres) {
+    			if(g.getName().equals(genre.getName())) {
+    				m.addAttribute("error", "%s genre is already existed!".formatted(genre.getName()));
+    				return "genre-edit";
+    			}
+    		}
     		dao.addGenre(genre);
     		req.addFlashAttribute("message", "%s has been creared successfully!".formatted(genre.getName()));
     	}else {
@@ -52,4 +63,8 @@ public class GenreController {
         dao.deleteGenre(id);
         return "redirect:/admin/genre/list";
     }
+    
+    private boolean isEmpty(String str) {
+		return str == null || str.isEmpty() || str.isBlank();
+	}
 }

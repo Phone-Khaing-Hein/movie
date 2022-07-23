@@ -50,38 +50,43 @@
 				  </button>
 				  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					  <c:forEach items="${ genres }" var="g">
-					  	<li><a class="dropdown-item" href="#">${ g.name }</a></li>
+					  	<c:url value="/genre" var="genre">
+					  		<c:param name="name" value="${ g.name }"></c:param>
+					  	</c:url>
+					  	<li><a class="dropdown-item" href="${ genre }">${ g.name }</a></li>
 					  </c:forEach>
 				  </ul>
 				</div>
             </li>
             </ul>
             </div>
-        <form class="form-inline my-2 my-lg-0">
+            <c:url value="/search" var="search"/>
+        <form class="form-inline my-2 my-lg-0" action="${ search }">
           <input
             class="form-control"
             type="search"
             placeholder="Enter the Title"
             aria-label="Search"
+            name="keyword"
           />
         </form>
         <div class="dropdown">
 		  <button class="btn btn-outline-danger dropdown-toggle ms-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 		    <c:choose>
-		    	<c:when test="${ not empty loginUser || not empty adminUser }">${ loginUser.name }</c:when>
+		    	<c:when test="${ not empty loginUser }">${ loginUser.name }</c:when>
 		    	<c:otherwise><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Login</c:otherwise>
 		    </c:choose>
 		  </button>
 		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-		  	<c:if test="${ empty loginUser && empty adminUser }">
+		  	<c:if test="${ empty loginUser}">
 		  		<c:url value="/login" var="login" />
 		  		<li><a class="dropdown-item" href="${ login }"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Login</a></li>
 		  	</c:if>
-		  	<c:if test="${ empty loginUser || loginUser.role eq 'Free' }">
+		  	<c:if test="${ not empty loginUser && loginUser.role eq 'Free' }">
 		  		<c:url value="/premium" var="premium" />
 		    	<li><a class="dropdown-item text-warning" href="${ premium }"><i class="fa-solid fa-crown me-2"></i>Premium</a></li>
 		  	</c:if>
-		    <c:if test="${ not empty loginUser || not empty adminUser }">
+		    <c:if test="${ not empty loginUser || loginUser.role eq 'Admin' }">
 		    	<c:url value="/favourite" var="favourite" />
 		    	<li><a class="dropdown-item text-danger" href="${ favourite }"><i class="fa-solid fa-heart me-2"></i>Favorite</a></li>
 		    	<hr />

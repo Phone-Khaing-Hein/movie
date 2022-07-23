@@ -44,14 +44,16 @@
               	  <div>
 	                <label for="name" class="form-label">Genre Name</label>
 	                <div class="d-flex gap-3 text-nowrap">
-	                	<input type="text" id="name" name="name" class="form-control ${ not empty error1 ? 'is-invalid' : '' }" value="${ genre.name }" />
+	                	<div class="">
+	                		<input type="text" id="name" name="name" class="form-control ${ not empty error ? 'is-invalid' : '' }" value="${ genre.name }" />
+	                	<div class="invalid-feedback">
+				        ${ error }
+				     </div>
+	                	</div>
 		                <div>
 				          <button class="btn btn-success" type="submit">${ not empty genre.id ? 'Update' : 'Add' } Genre</button>
 			       	  	</div>
 	                </div>
-	                <div class="invalid-feedback">
-				        ${ error1 }
-				     </div>
 	              </div>
               	</div>
 		      

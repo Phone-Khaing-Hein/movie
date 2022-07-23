@@ -3,7 +3,6 @@ package com.movie.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.*;
-import org.springframework.ui.Model;
 
 import com.movie.model.Genre;
 import com.movie.model.Movie;
@@ -70,4 +69,15 @@ public interface MovieMapper {
 
 	@Delete("delete from movies_genres where movies_id = #{id}")
 	void deleteGenres(Integer id);
+	
+	@Select("""
+			select m.id,m.name,m.description,m.release_date,m.trailer,m.poster,m.episodes,m.normal_dl,m.premium_dl from movies m 
+			join movies_genres mg on m.id = mg.movies_id
+			join genres g on g.id = mg.genres_id
+			where g.name = #{name}
+			""")
+	List<Movie> searchByGenres(String name);
+
+	@Select("select * from movies where name like #{keyword}")
+	List<Movie> searchByName(String keyword);
 }

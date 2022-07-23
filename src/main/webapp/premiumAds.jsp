@@ -44,7 +44,7 @@
   <p style="color: green;"><i class="fa-solid fa-check mr-2"></i>Fast Download link</p>
   
   <div class="card-footer">
-  <c:url value="/payment" var="payment"/>
+  <c:url value="/payment/add" var="payment"/>
    <a href="${ payment }" class="btn btn-outline-success">Go to</a>
   </div>
 </div>

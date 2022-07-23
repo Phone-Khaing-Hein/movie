@@ -19,8 +19,6 @@
 		  </button>
 		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 		    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
-		    <c:url value="/logout" var="logout"/>
-		    <li><a class="dropdown-item" href="${ logout }"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Logout</a></li>
 		  </ul>
 		</div>
       </div>

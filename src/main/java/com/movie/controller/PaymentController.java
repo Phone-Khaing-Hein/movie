@@ -1,5 +1,12 @@
 package com.movie.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
+import javax.servlet.annotation.MultipartConfig;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,75 +14,66 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.movie.mapper.PaymentMapper;
+import com.movie.dao.PaymentDao;
+import com.movie.dao.UserDao;
 import com.movie.model.Payment;
+import com.movie.model.User;
 
 @Controller
+@MultipartConfig
 public class PaymentController {
 	@Autowired
-	PaymentMapper paymentMapper;
+	PaymentDao dao;
+	
+	@Autowired
+	UserDao dao2;
 
 	@GetMapping("/admin/payment/list")
 	public String paymentManagement(Model model) {
-		model.addAttribute("paymentList", paymentMapper.findAll());
+		var paymentList = dao.findAll();
+		for(var p : paymentList) {
+			p.setUsername(dao2.findById(p.getUserId()).getName());
+		}
+		model.addAttribute("paymentList", paymentList);
+		
 		return "payment-management";
 	}
 
-	@GetMapping("/setupAddPayment")
-	public String setupAddPayment(Model model) {
+	@GetMapping("/payment/add")
+	public String payment() {
 		return "payment";
 	}
 
-	@PostMapping("/addPayment")
-	public String addPayment(@ModelAttribute Payment payment, Model m, RedirectAttributes redirect) {
+	@PostMapping("/payment/add")
+	public String addPayment(@ModelAttribute Payment payment, @RequestParam String username, @RequestParam String email, Model m, RedirectAttributes redirect) throws IllegalStateException, IOException {
 		if (isEmpty(payment.getPackages())) {
 			m.addAttribute("error1", "Package is required!");
 		}
 
-		if (isEmpty(payment.getScreenshot())) {
+		if (payment.getScreenshotFile() == null) {
 			m.addAttribute("error2", "Screenshot is required!");
 		}
 
-		if (!isEmpty(payment.getPackages()) && !isEmpty(payment.getScreenshot())) {
-			paymentMapper.insertPayment(payment);
+		if (!isEmpty(payment.getPackages()) && payment.getScreenshotFile() != null) {
+			var random = new Random();
+			payment.setScreenshot("payment%d.jpg".formatted(random.nextInt()));
+			var name = payment.getScreenshot();
+			uploadFile(payment.getScreenshotFile(), name);
+			dao.add(payment);
+			redirect.addFlashAttribute("message", "Wait for 24hrs admin will approve your payment");
+			return "redirect:/payment/add";
 		}
-		m.addAttribute("payment", new Payment());
 		return "payment";
 	}
 
 	private boolean isEmpty(String str) {
 		return str == null || str.isEmpty() || str.isBlank();
 	}
-
-	@GetMapping("/setupUpdatePayment")
-	public String setupUpdatePayment(@RequestParam("selectedId") int id, Model m) {
-		Payment payment = paymentMapper.findById(id);
-		m.addAttribute("payment", payment);
-		return "payment-management";
+	public void uploadFile(MultipartFile file, String posterName) throws IllegalStateException, IOException {
+		file.transferTo(
+				new File("D:\\OJT assignment\\movie\\src\\main\\webapp\\image\\payment\\%s".formatted(posterName)));
 	}
-
-	@PostMapping("/updatePayment")
-	public String updatePayment(@ModelAttribute Payment payment, Model m) {
-		if (isEmpty(payment.getPackages())) {
-			m.addAttribute("error1", "Package is required!");
-		}
-
-		if (isEmpty(payment.getScreenshot())) {
-			m.addAttribute("error2", "Screenshot is required!");
-		}
-
-		if (!isEmpty(payment.getPackages()) && !isEmpty(payment.getScreenshot())) {
-			paymentMapper.updatePayment(payment);
-		}
-		return "payment-management";
-	}
-
-	@GetMapping(value = "/deletePayment")
-	public String deletePayment(@RequestParam("selectedId") int id, Model m) {
-		paymentMapper.deletePayment(id);
-		return "payment-management";
-	}
-
 }

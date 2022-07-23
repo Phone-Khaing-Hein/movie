@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-
-import com.movie.mapper.GenreMapper;
 import com.movie.mapper.MovieMapper;
 import com.movie.model.Genre;
 import com.movie.model.Movie;
@@ -75,5 +72,13 @@ public class MovieDao {
 		for(var g : genres) {
 			mapper.insertGenreWithMovie(m.getId(), Integer.parseInt(g));
 		}
+	}
+	
+	public List<Movie> searchByGenre(String name){
+		return mapper.searchByGenres(name);
+	}
+
+	public List<Movie> searchByName(String keyword) {
+		return mapper.searchByName("%".concat(keyword).concat("%"));
 	}
 }

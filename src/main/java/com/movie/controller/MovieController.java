@@ -38,6 +38,11 @@ public class MovieController {
 	@Autowired
 	private PaymentDao dao4;
 	
+	@GetMapping("/**")
+	public String notfound() {
+		return "404";
+	}
+	
 	@GetMapping({"/home","/"})
 	public String home(Model m) {
 		m.addAttribute("nav", "home");
@@ -50,6 +55,7 @@ public class MovieController {
 	
 	@GetMapping("/movies")
 	public String movies(Model m) {
+		m.addAttribute("genres", dao2.findAll());
 		m.addAttribute("nav", "Movies");
 		m.addAttribute("movies", dao.findAllMovies());
 		return "template";
@@ -57,6 +63,7 @@ public class MovieController {
 	
 	@GetMapping("/series")
 	public String series(Model m) {
+		m.addAttribute("genres", dao2.findAll());
 		m.addAttribute("nav", "Series");
 		m.addAttribute("movies", dao.findAllSeries());
 		return "template";
@@ -64,20 +71,33 @@ public class MovieController {
 	
 	@GetMapping("/trends")
 	public String trends(Model m) {
+		m.addAttribute("genres", dao2.findAll());
 		m.addAttribute("nav", "Trends");
 		m.addAttribute("movies", dao.findAll());
 		return "template";
+	}
+	
+	@GetMapping("/genre")
+	public String searchByGenres(@RequestParam String name, Model m) {
+		m.addAttribute("genres", dao2.findAll());
+		m.addAttribute("nav", name);
+		m.addAttribute("movies", dao.searchByGenre(name));
+		return "searchByGenre";
+	}
+	
+	@GetMapping("/search")
+	public String searchByName(@RequestParam String keyword, Model m) {
+		m.addAttribute("genres", dao2.findAll());
+		m.addAttribute("keyword", keyword);
+		m.addAttribute("movies", dao.searchByName(keyword));
+		return "searchByGenre";
 	}
 	
 	@GetMapping("/premium")
 	public String premium() {
 		return "premiumAds";
 	}
-	
-	@GetMapping("/payment")
-	public String payment() {
-		return "payment";
-	}
+
 	
 	@GetMapping("/admin/dashboard")
 	public String dashboard(Model m) {
@@ -107,8 +127,9 @@ public class MovieController {
 	
 	@GetMapping("/admin/movie/delete")
 	public String add(@RequestParam String movieId) {
+		var poster = dao.findById(movieId).getPoster();
+		deleteFile(poster);
 		dao.delete(Integer.parseInt(movieId));
-		deleteFile(dao.findById(movieId).getPoster());
 		return "redirect:/admin/movie/list";
 	}
 	

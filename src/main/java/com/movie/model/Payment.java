@@ -1,6 +1,7 @@
 package com.movie.model;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,5 @@ public class Payment {
     private int userId;
     private String packages;
     private String screenshot;
-
+    private MultipartFile  screenshotFile;
 }

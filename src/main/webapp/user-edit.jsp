@@ -63,25 +63,17 @@
               </div>
               </div>
               <div class="row mt-2">
-              	<div class="col">
+              	<div class="col-6">
               		<label for="" class="form-label">Email</label>
               		<input type="email" name="emil" class="form-control ${ not empty error3 ? 'is-invalid' : '' }" value="${ user.email }" readonly="readonly"/>
               		<div class="invalid-feedback">
 				        ${ error3 }
 				  </div>
               	</div>
-              	<div class="col">
-              		<label for="" class="form-label">Password</label>
-              		<input type="text" name="trailer" class="form-control ${ not empty error4 ? 'is-invalid' : '' }" value="${ user.password }" readonly="readonly"/>
-              		<div class="invalid-feedback">
-				        ${ error4 }
-				  </div>
-              	</div>
-              </div>
-              	
-              	<div class="mt-4 pt-2 float float-end">
+              	<div class="mt-4 pt-2 col-6">
 		          <button class="btn btn-success" type="submit">${ not empty user.id ? 'Update' : 'Add' } User</button>
 	          </div>
+              </div>
             </form>
           </div>
         </div>

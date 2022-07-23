@@ -37,8 +37,14 @@ public class SecurityController {
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.invalidate();
+		session.removeAttribute("loginUser");
 		return "redirect:/login";
+	}
+	
+	@GetMapping("/admin/logout")
+	public String adminLogout(HttpSession session) {
+		session.removeAttribute("adminUser");
+		return "redirect:/admin/login";
 	}
 	
 	@PostMapping("/login")
@@ -59,7 +65,7 @@ public class SecurityController {
 		
 		if(!isEmpty(email) && !isEmpty(password)) {
 			var user = dao.findByEmail(email);
-			if(password.equals(user.getPassword())) {
+			if(user != null &&password.equals(user.getPassword())) {
 				session.setAttribute("loginUser", user);
 				return "redirect:/home";
 			}else {

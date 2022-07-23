@@ -1,6 +1,7 @@
 package com.movie.controller;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,8 @@ public class UserController {
 	
 	@GetMapping("/admin/user/edit")
 	public String userEdit(@RequestParam String userId, Model m) {
-		m.addAttribute("user", dao.findById(Integer.parseInt(userId)));
+		var user = dao.findById(Integer.parseInt(userId));
+		m.addAttribute("user", user);
 		return "user-edit";
 	}
 	
@@ -40,8 +42,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/admin/user/edit")
-	public String edit(@ModelAttribute User user, RedirectAttributes attr) {
+	public String edit(@ModelAttribute User user, RedirectAttributes attr, HttpSession session) {
 		dao.update(user);
+		attr.addAttribute("message", "User updated successfully!");
+		var loginUser = (User)session.getAttribute("loginUser");
+		if(user.getId() == loginUser.getId()) {
+			session.setAttribute("loginUser", user);
+		}
 		return "redirect:/admin/user/list";
 	}
 	
