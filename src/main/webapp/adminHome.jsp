@@ -67,8 +67,8 @@
               <p>${ payments }</p>
             </div>
           </div>
-          <div>
-            <canvas id="myChart" width="800" height="400"></canvas>
+          <div class="ms-5">
+            <canvas id="myChart" width="800" height="400" class="ms-5"></canvas>
           </div>
         </div>
       </div>

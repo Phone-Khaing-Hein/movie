@@ -15,11 +15,14 @@
 
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Teepo Detail</title>
 </head>
-<body style="min-height: 100vh; background-color: black;">
-	<c:import url="nav.jsp"></c:import>
-	<div class="container d-flex justify-content-center gap-5 align-items-center mt-5 mb-5">
+<c:import url="nav.jsp"></c:import>
+<body style="min-height: 100vh; background-color: black;margin-top: 150px;">
+	
+	<div class="container d-flex justify-content-center gap-5 align-items-center mt-5 mb-5" style="margin-bottom: 300px;">
 		<div class="img mr-5">
 			<c:url value="/image/poster/${ m.poster }" var="image"></c:url>
 			<img
@@ -60,7 +63,7 @@
 
 					<c:if test="${ not empty loginUser }">
 						<div class="submit mr-2">
-							<button type="button" class="btn btn-outline-danger">
+							<button type="button" id="fav" class="btn btn-outline-danger">
 								<i class="fa-solid fa-heart mr-2"></i>Add to Favorite
 							</button>
 						</div>
@@ -122,6 +125,21 @@
 	<div style="">
 		<c:import url="footer.jsp"></c:import>
 	</div>
-
+	<c:url value="/addToFav" var="fav">
+		<c:param name="userId" value="${ loginUser.id }"></c:param>
+		<c:param name="movieId" value="${ m.id }"></c:param>
+	</c:url>
+<script>
+	$('#fav').click(function(){
+		Swal.fire({
+			  title: '<strong>Added to favourite!</strong>',
+			  icon: 'success',
+			  focusConfirm: true,
+			  confirmButtonText:
+			    '<a  href=${ fav } class="text-decoration-none text-white"><i class="fa fa-thumbs-up"></i> Great!<a>',
+			  confirmButtonAriaLabel: 'Thumbs up, great!',
+			})
+	});
+</script>
 </body>
 </html>

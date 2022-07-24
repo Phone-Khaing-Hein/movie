@@ -16,7 +16,12 @@
 <body style="height: 100vh; background-color: black;">
 <c:import url="nav.jsp"></c:import>
 <div class="container">
-<h4 style="color:white;margin-top: 20px;">Trend</h4><hr class="bg-white"/>
+<div class="d-flex justify-content-between align-items-center" style="margin-top: 100px;">
+	<h4 style="color:white;">Trend</h4> 
+	<c:url value="/trends" var="trend"/>
+	<a href="${ trend }" class="text-white text-decoration-none h5">See more >></a>
+</div>
+<hr class="bg-white">
 <div class="d-flex mt-2 mb-5 gap-3 align-items-center justify-content-center">
     	<c:forEach items="${trends}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">
@@ -38,7 +43,12 @@
     	</c:forEach>
 </div>
 
-<h4 style="color:white">Latest Movies</h4><hr class="bg-white"/>
+<div class="d-flex justify-content-between align-items-center" style="margin-top: 20px;">
+	<h4 style="color:white;">Latest Movies</h4>/> 
+	<c:url value="/movies" var="movie"/>
+	<a href="${ movie }" class="text-white text-decoration-none h5">See more >></a>
+</div>
+<hr class="bg-white">
 <div class="d-flex mt-2 mb-5 gap-3 align-items-center justify-content-center">
     	<c:forEach items="${movies}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">
@@ -60,7 +70,12 @@
     	</c:forEach>
 </div>
 
-<h4 style="color:white">Latest Series</h4><hr class="bg-white"/>
+<div class="d-flex justify-content-between align-items-center" style="margin-top: 20px;">
+	<h4 style="color:white;">Latest Series</h4>/> 
+	<c:url value="/series" var="serie"/>
+	<a href="${ serie }" class="text-white text-decoration-none h5">See more >></a>
+</div>
+<hr class="bg-white">
 <div class="d-flex mt-2 gap-3 align-items-center justify-content-center">
     	<c:forEach items="${series}" var="m">
 	    	<c:url value="/movie/detail" var="movieDetail">

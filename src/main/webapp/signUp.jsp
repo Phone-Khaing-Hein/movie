@@ -118,6 +118,9 @@ font-size: 16px;
 		<div>
 			<button type="submit" class="login1">Sign Up</button>
 		</div>
+		<c:url value="/login" var="login" />
+		<c:url value="home" var="home" />
+		<p class="ml-5 mb-0">Already have an account? <a href="${ login }">Login Here</a> || <a href="${ home }">Home</a></p>
 	</form>
 </body>
 </html>

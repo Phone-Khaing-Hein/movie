@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.movie.dao.MovieDao;
 import com.movie.dao.PaymentDao;
 import com.movie.dao.UserDao;
 import com.movie.model.Movie;
+import com.movie.model.User;
 
 @Controller
 @MultipartConfig
@@ -46,6 +48,20 @@ public class MovieController {
 		m.addAttribute("series", dao.findSeries6());
 		m.addAttribute("trends", dao.findAll6());
 		return "home";
+	}
+	
+	@GetMapping("/addToFav")
+	public String fav(@RequestParam String userId, @RequestParam String movieId) {
+		dao.addToFav(Integer.parseInt(userId), Integer.parseInt(movieId));
+		return "redirect:/movie/detail?movieId=%s".formatted(movieId);
+	}
+	
+	@GetMapping("/favourite")
+	public String favourite(Model m, HttpSession session) {
+		m.addAttribute("genres", dao2.findAll());
+		var loginUser = (User)session.getAttribute("loginUser");
+		m.addAttribute("movies", dao.findAllFavourite(loginUser.getId()));
+		return "favourite";
 	}
 	
 	@GetMapping("/movies")
@@ -200,7 +216,7 @@ public class MovieController {
 			}
 			return "redirect:/admin/movie/add";
 		   }
-		
+		m.addAttribute("allGenres", dao2.findAll());
 		return "movie-add";
 	}
 	

@@ -81,4 +81,12 @@ public class MovieDao {
 	public List<Movie> searchByName(String keyword) {
 		return mapper.searchByName("%".concat(keyword).concat("%"));
 	}
+
+	public void addToFav(int userId, int movieId) {
+		mapper.addTofav(userId, movieId);
+	}
+
+	public List<Movie> findAllFavourite(int userId) {
+		return mapper.findAllFav(userId);
+	}
 }

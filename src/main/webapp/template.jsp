@@ -13,7 +13,7 @@
 <body style="background-color: black;">
 	<c:import url="/nav.jsp"/>
 	<div class="container">
-		<h4 style="color:white;margin-top: 20px;">${ nav }</h4><hr class="bg-white"/>
+		<h4 style="color:white;margin-top: 100px;">${ nav }</h4><hr class="bg-white"/>
 	</div>
 	<div class="d-flex mt-2 mb-5 gap-3 align-items-center justify-content-center container flex-wrap">
 	    	<c:forEach items="${movies}" var="m">

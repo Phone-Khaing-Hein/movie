@@ -42,7 +42,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Name</th>
+              <th>Feedback</th>
               <th>User</th>
               <th>Control</th>
             </tr>

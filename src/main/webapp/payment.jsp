@@ -13,7 +13,6 @@
 <style>
 	@charset "ISO-8859-1";
 body{ 
-background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/25badb14-858b-4b1c-8b7d-2244098454d9/538e2c55-738c-4e62-8152-490342e18a86/SG-en-20220606-popsignuptwoweeks-perspective_alpha_website_large.jpg");
 height: 60vh;
 background-size:cover; 
 background-position:center; 
@@ -87,13 +86,16 @@ font-size: 16px;
 
 <label class="ms-5">Select Package</label>
 <select name="packages" class="form-select ms-5 ${ not empty error1 ? 'is-invalid' : '' }" style="width: 400px">
-	<option value="1">1 Month</option>
-	<option value="3">3 Months</option>
-	<option value="6">6 Months</option>
-	<option value="12">1 Year</option>
+	<option value="1">1 Month - 5$</option>
+	<option value="3">3 Months - 13$</option>
+	<option value="6">6 Months - 25$</option>
+	<option value="12">1 Year - 45$ + 1 month free</option>
 </select>
 <div class="invalid-feedback">${ error1 }</div>
-
+<div class="ms-5 mt-3 text-danger">
+<p>You can send to pkh2662003@gmail.com with paypal.</p>
+<p style="margin-bottom: -15px;">You can send to 09777839928 with mobile pay.</p>
+</div>
 <div class="input-box">
 <label>Payment Screenshot</label>
 <input type="file" name="screenshotFile" class="form-control ${ not empty error2 ? 'is-invalid' : '' }" style="width: 400px">

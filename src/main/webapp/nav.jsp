@@ -10,7 +10,7 @@
     <title>Teepo</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex" style="position: fixed;width: 100%;top: 0;z-index: 5;">
       <div class="container">
       	<c:url value="/home" var="home"></c:url>
         <a class="navbar-brand " href="${ home }" style="color:red; font-family: 'Anton', sans-serif; font-size: 35px">TEEPO</a>

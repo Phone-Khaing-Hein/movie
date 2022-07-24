@@ -31,8 +31,8 @@
   <p style="color: red;"><i class="fa-solid fa-xmark mr-2"></i>Fast Download link</p>
   
   <div class="card-footer">
-   <c:url value="/login" var="login"/>
-   <a href="${ login }" class="btn btn-outline-danger">Go to</a>
+   <c:url value="/" var="home"/>
+   <a href="${ home }" class="btn btn-outline-danger">Back</a>
   </div>
 </div>
 
@@ -45,7 +45,7 @@
   
   <div class="card-footer">
   <c:url value="/payment/add" var="payment"/>
-   <a href="${ payment }" class="btn btn-outline-success">Go to</a>
+   <a href="${ payment }" class="btn btn-outline-success">Buy Now</a>
   </div>
 </div>
 </div>

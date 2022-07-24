@@ -39,10 +39,9 @@ pageEncoding="ISO-8859-1"%>
         <c:url value="/suggestion/add" var="add"></c:url>
          <form action="${ add }" method="post">
          	<div class="d-flex justify-content-center align-items-center ms-5">
-         		<c:if test="${ not empty loginUser || not empty adminUser }">
-         			<input type="hidden" name="userId" value="${ not empty loginUser ? loginUser.id : not empty adminUser ? adminUser.id : '' }" />
-         		</c:if>
-         		<textarea cols="30" name="feedback" rows="1" class="form-control me-2 ms-5" style="width: 900px;max-height: 100px"></textarea>
+         		<c:if test="${ not empty loginUser }">
+         			<input type="hidden" name="userId" value="${ not empty loginUser ? loginUser.id : 0}" />
+         			<textarea cols="30" name="feedback" rows="1" class="form-control me-2 ms-5" style="width: 900px;max-height: 100px">Suggest Here...</textarea>
 		          <button
 		            class="btn btn-danger"
 		            type="submit"
@@ -51,6 +50,7 @@ pageEncoding="ISO-8859-1"%>
 		            <i class="fa-solid fa-paper-plane"></i>
 		          </button>
          	
+         		</c:if>
          	</div>
          </form>
         </div>

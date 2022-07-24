@@ -80,4 +80,14 @@ public interface MovieMapper {
 
 	@Select("select * from movies where name like #{keyword}")
 	List<Movie> searchByName(String keyword);
+
+	@Insert("insert into users_movies value (#{userId}, #{movieId})")
+	void addTofav(int userId, int movieId);
+
+	@Select("""
+			select m.id,m.name,m.description,m.release_date,m.trailer,m.poster,m.episodes,m.normal_dl,m.premium_dl from movies m 
+			join users_movies um on m.id = um.movie_id
+			where um.user_id = #{userId}
+			""")
+	List<Movie> findAllFav(int userId);
 }
