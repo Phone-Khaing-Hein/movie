@@ -22,46 +22,88 @@
      <c:import url="adminSidebar.jsp"></c:import>
 
       <div class="w-75 rounded me-2 bg-dark p-4" style="margin-left: 390px !important;">
-        <div class="d-flex justify-content-between align-items-center p-3">
-          <h3 class="text-white mb-0">Genre ${ not empty genre.id ? 'Update' : 'Add' }</h3>
-          <c:if test="${ not empty message }">
-          	<p class="alert alert-success" role="alert">
-			  ${ message }
-			</p>
-          </c:if>
-          <c:url value="/admin/genre/list" var="movieList"></c:url>
-          <a href="${ movieList }" class="btn btn-success">Genre List</a>
-        </div>
-        <div class="row ms-2">
-          <div class="col-12">
-          <c:url value="/admin/genre/edit" var="addGenre"></c:url>
-            <form action="${ addGenre }" method="post" class="text-white" enctype="multipart/form-data">
-            	<c:if test="${ not empty genre.id }">
-            		<input type="hidden" name="id" value="${ genre.id }" />
-            	</c:if>
-              <div class="row">
-              	<div class="col-6">
-              	  <div>
-	                <label for="name" class="form-label">Genre Name</label>
-	                <div class="d-flex gap-3 text-nowrap">
-	                	<div class="">
-	                		<input type="text" id="name" name="name" class="form-control ${ not empty error ? 'is-invalid' : '' }" value="${ genre.name }" />
-	                	<div class="invalid-feedback">
-				        ${ error }
-				     </div>
-	                	</div>
-		                <div>
-				          <button class="btn btn-success" type="submit">${ not empty genre.id ? 'Update' : 'Add' } Genre</button>
-			       	  	</div>
-	                </div>
-	              </div>
-              	</div>
-              </div>
-            </form>
-          </div>
-        </div>
+        <h3 class="text-white">Admin Profile</h3>
+        <c:url value="/admin/profile/update" var="updateProfile"/>
+        <form action="${ updateProfile }" method="post">
+        	<c:if test="${ not empty adminUser.id }">
+        		<input type="hidden" value="${ adminUser.id }" name="id" />
+        	</c:if>
+        	<div class="row mt-3">
+	        	<div class="col-6">
+	        		<label class="text-white">Name</label>
+	        		<input type="text" class="form-control ${ not empty error2 ? 'is-invalid' : '' }" value="${ adminUser.name }" name="name" />
+	        		<div class="invalid-feedback">
+					     ${ error2 }
+					 </div>
+	        	</div>
+	        </div>
+	        <div class="row mt-3">
+	        	<div class="col-6">
+	        		<label class="text-white">Email</label>
+	        		<input type="text" class="form-control ${ not empty error1 ? 'is-invalid' : '' }" value="${ adminUser.email }" name="email" />
+	        			<div class="invalid-feedback">
+					        ${ error1 }
+					  	</div>
+	        	</div>
+	        </div>
+	        <div class="row mt-3">
+	        	<div class="col-6">
+	        		<button type="submit" class="btn btn-success">Update Profile</button>
+	        	</div>
+	        </div>
+        </form>
       </div>
+      <hr class="bg-white" />
     </div>
+    
+    <div class="d-flex mt-2 mb-2" >
+      <div class="w-75 rounded me-2 bg-dark p-4" style="margin-left: 390px !important;">
+        <h3 class="text-white">Change Password</h3>
+        <c:url value="/admin/password-change" var="passwordChange"/>
+        <form action="${ passwordChange }" method="post">
+        	<div class="row">
+	        	<div class="col-6">
+	        		<label class="text-white">Old Password</label>
+	        		<input type="password" class="form-control ${ not empty error1 ? 'is-invalid' : '' }" name="oldPassword"/>
+	        		<div class="invalid-feedback">
+					        ${ error1 }
+					  	</div>
+	        	</div>
+	        </div>
+	        <div class="row mt-3">
+	        	<div class="col-6">
+	        		<label class="text-white">New Password</label>
+	        		<input type="password" class="form-control ${ not empty error2 || not empty error5 ? 'is-invalid' : '' }" name="password"/>
+	        		<div class="invalid-feedback">
+					        ${ error2 }
+					  	</div>
+					  	<div class="invalid-feedback">
+					        ${ error5 }
+					  	</div>
+	        	</div>
+	        </div>
+	        <div class="row mt-3">
+	        	<div class="col-6">
+	        		<label class="text-white">Confirm Password</label>
+	        		<input type="password" class="form-control ${ not empty error3 || not empty error4 ? 'is-invalid' : '' }" name="cpassword"/>
+	        		<div class="invalid-feedback">
+					        ${ error3 }
+					  	</div>
+					  	<div class="invalid-feedback">
+					        ${ error4 }
+					  	</div>
+	        	</div>
+	        </div>
+	        <div class="row mt-3">
+	        	<div class="col-6">
+	        		<a href="" class="btn btn-success">Change Password</a>
+	        	</div>
+	        </div>
+        </form>
+      </div>
+      <hr class="bg-white" />
+    </div>
+    
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

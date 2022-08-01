@@ -28,4 +28,10 @@ public interface UserMapper {
 
 	@Update("update users set role = #{role} where id = #{id}")
 	void update(User u);
+
+	@Update("update users set name = #{name}, email = #{email} where id = #{id}")
+	void updateProfile(String name, String email, int id);
+
+	@Update("update users set password = #{password} where id = #{id}")
+	void changePassword(String oldPassword, String password, String cpassword, int id);
 }

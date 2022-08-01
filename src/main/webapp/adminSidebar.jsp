@@ -5,7 +5,7 @@
         <div
           class="d-flex align-items-center justify-content-center flex-column"
         >
-        	<c:url value="/image/profile/default.jpg" var="image"/>
+        	<c:url value="/image/profile/${ adminUser.photo }" var="image"/>
           <img
           	src="${ image }"
           	height="200"

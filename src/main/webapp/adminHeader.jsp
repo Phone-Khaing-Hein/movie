@@ -18,7 +18,8 @@
 		    ${ adminUser.name }
 		  </button>
 		  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-		    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+		  	<c:url value="/admin/profile" var="adminProfile"/>
+		    <li><a class="dropdown-item" href="${ adminProfile }"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
 		  </ul>
 		</div>
       </div>

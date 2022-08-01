@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 	"/admin/suggestion/*",
 	"/admin/user/*",
 	"/admin/dashboard",
+	"/admin/profile",
 	"/logout"
 })
 public class SecurityFilter implements Filter{

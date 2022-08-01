@@ -43,4 +43,12 @@ public class UserDao {
 		mapper.update(u);
 	}
 
+	public void updateProfile(String name, String email, int id) {
+		mapper.updateProfile(name, email, id);
+	}
+
+	public void updatePassword(String oldPassword, String password, String cpassword, int id) {
+		mapper.changePassword(oldPassword, password, cpassword, id);
+	}
+
 }

@@ -72,6 +72,7 @@ public class PaymentController {
 	private boolean isEmpty(String str) {
 		return str == null || str.isEmpty() || str.isBlank();
 	}
+	
 	public void uploadFile(MultipartFile file, String posterName) throws IllegalStateException, IOException {
 		file.transferTo(
 				new File("D:\\OJT assignment\\movie\\src\\main\\webapp\\image\\payment\\%s".formatted(posterName)));
